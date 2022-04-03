@@ -1,0 +1,53 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+
+}
+
+.title {
+    color:rgb(244, 162, 255)
+}
+
+.btn {
+    margin-left: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    padding: 5px 8px;
+    background-color: #ffa8d4;
+    color: #fff;
+}
+
+.input {
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 5px 8px;
+    background-color: rgb(232, 237, 252);
+}
+
+.list {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+.item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.checkbox {
+    margin-right: 20px;
+}
+
+.form {
+    margin-bottom: 10px;
+}
