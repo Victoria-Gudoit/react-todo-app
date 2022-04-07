@@ -1,0 +1,8 @@
+.filter {
+margin-right: 10px;
+font-size: 13px;
+}
+
+.filter:last-child {
+    margin-right: 0;
+}
