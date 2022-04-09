@@ -4,11 +4,13 @@
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
+    font-family: 'Lato', sans-serif;
 
 }
 
 .title {
-    color:rgb(244, 162, 255)
+    color:rgb(244, 162, 255);
+   
 }
 
 .btn {
@@ -41,11 +43,11 @@
     margin-bottom: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+
 }
 
 .checkbox {
-    margin-right: 20px;
+    margin-right: 5px;
 }
 
 .form {
