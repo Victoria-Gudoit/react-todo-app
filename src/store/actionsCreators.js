@@ -15,7 +15,7 @@ export const toggleCheckbox = (id) => ({
   type: TASKS_ACTIONS.TOGGLE_CHECKBOX,
 });
 
-export const filterTasks = (event) => ({
-  payload: event.target.value,
+export const changeFilter = (event) => ({
+  payload: event,
   type: TASKS_ACTIONS.FILTER_TASKS,
 });

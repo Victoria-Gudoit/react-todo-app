@@ -4,21 +4,21 @@ import { TASKS_ACTIONS } from "./constants";
 import { FILTER_STATUSES } from "../components/constants";
 
 const INITIAL_STATE = {
-  tasks: {
-    values: [
-      { id: 1, label: "срочно покормить кота", isDone: true },
-      { id: 2, label: "поспать 12 часов", isDone: false },
-      { id: 3, label: "вкусно поесть", isDone: true },
-    ],
-    filter: FILTER_STATUSES.ALL,
-  },
+  tasks: [
+    { id: 1, label: "срочно покормить кота", isDone: true },
+    { id: 2, label: "поспать 12 часов", isDone: false },
+    { id: 3, label: "вкусно поесть", isDone: true },
+  ],
+  filter: FILTER_STATUSES.ALL,
 };
 
-const usersReducer = (state = INITIAL_STATE.tasks, action) => {
+// const INITIAL_STATE_FILTER = { filter: FILTER_STATUSES.ALL };
+
+export const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TASKS_ACTIONS.DELETE_TASK: {
       return {
-        values: state.values.filter(
+        tasks: state.tasks.filter(
           ({ id: taskId }) => taskId !== action.payload
         ),
       };
@@ -27,13 +27,13 @@ const usersReducer = (state = INITIAL_STATE.tasks, action) => {
     case TASKS_ACTIONS.ADD_TASK: {
       const id = uuidv4();
       return {
-        values: state.values.concat({ ...action.payload, id }),
+        tasks: state.tasks.concat({ ...action.payload, id }),
       };
     }
 
     case TASKS_ACTIONS.TOGGLE_CHECKBOX: {
       return {
-        values: state.values.map((task) => {
+        tasks: state.tasks.map((task) => {
           if (task.id !== action.payload) {
             return task;
           }
@@ -48,7 +48,7 @@ const usersReducer = (state = INITIAL_STATE.tasks, action) => {
   }
 };
 
-const filterReducer = (state = INITIAL_STATE.tasks, action) => {
+export const filterReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TASKS_ACTIONS.FILTER_TASKS: {
       return {
@@ -60,10 +60,7 @@ const filterReducer = (state = INITIAL_STATE.tasks, action) => {
   }
 };
 
-const rootReducer = combineReducers({
-  tasks: usersReducer,
-  filter: filterReducer,
-});
+const rootReducer = combineReducers({ usersReducer, filterReducer });
 
 export const store = createStore(
   rootReducer,

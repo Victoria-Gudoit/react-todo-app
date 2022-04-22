@@ -12,10 +12,8 @@ export const filterTasks = (filter, task) => {
   return !task.isDone;
 };
 
-const getTasksBranch = (state) => state.tasks;
-
-export const getTasksOriginal = (state) => getTasksBranch(state).values;
-export const getFilter = (state) => getTasksBranch(state).filter;
+export const getTasksOriginal = (state) => state.usersReducer.tasks;
+export const getFilter = (state) => state.filterReducer.filter;
 
 export const getTasks = (state) => {
   const tasks = getTasksOriginal(state);

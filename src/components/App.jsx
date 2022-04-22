@@ -21,6 +21,7 @@ class AppOriginal extends React.Component {
 
   addTaskHandler = () => {
    this.props.addTask({label: this.state.taskInput, isDone: false})
+   this.setState({taskInput: ''})
   };
 
   toggleCheckbox = (id) => {
@@ -28,11 +29,10 @@ class AppOriginal extends React.Component {
   };
 
   changeFilterHandler = (event) => {
-    this.props.filterTasks(event)
+    this.props.changeFilter(event.target.value)
   }
 
   render() {
-    console.log(this.props.filter);
     const { taskInput} = this.state;
     const {tasks, filter} = this.props;
 
@@ -73,7 +73,7 @@ const mapDispatchToProps =  {
   deleteTask: TasksActionCreators.deleteTask,
   addTask: TasksActionCreators.addTask,
   toggleCheckbox: TasksActionCreators.toggleCheckbox,
-  filterTasks: TasksActionCreators.filterTasks,
+  changeFilter: TasksActionCreators.changeFilter,
 }
 
 export const App = connect(mapStateToProps, mapDispatchToProps)(AppOriginal)
