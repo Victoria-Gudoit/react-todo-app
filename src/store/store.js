@@ -12,9 +12,7 @@ const INITIAL_STATE = {
   filter: FILTER_STATUSES.ALL,
 };
 
-// const INITIAL_STATE_FILTER = { filter: FILTER_STATUSES.ALL };
-
-export const usersReducer = (state = INITIAL_STATE, action) => {
+export const tasksReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case TASKS_ACTIONS.DELETE_TASK: {
       return {
@@ -60,7 +58,7 @@ export const filterReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const rootReducer = combineReducers({ usersReducer, filterReducer });
+const rootReducer = combineReducers({ tasksReducer, filterReducer });
 
 export const store = createStore(
   rootReducer,

@@ -12,7 +12,7 @@ export const filterTasks = (filter, task) => {
   return !task.isDone;
 };
 
-export const getTasksOriginal = (state) => state.usersReducer.tasks;
+export const getTasksOriginal = (state) => state.tasksReducer.tasks;
 export const getFilter = (state) => state.filterReducer.filter;
 
 export const getTasks = (state) => {
