@@ -1,7 +1,6 @@
 import { createStore, combineReducers } from "redux";
-import { v4 as uuidv4 } from "uuid";
 import { TASKS_ACTIONS } from "./constants";
-import { FILTER_STATUSES } from "../components/constants";
+import { FILTER_STATUSES } from "../components/Tasks/constants";
 
 const INITIAL_STATE = {
   tasks: [
@@ -10,6 +9,7 @@ const INITIAL_STATE = {
     { id: 3, label: "вкусно поесть", isDone: true },
   ],
   filter: FILTER_STATUSES.ALL,
+  isAuth: false,
 };
 
 export const tasksReducer = (state = INITIAL_STATE, action) => {
@@ -23,7 +23,7 @@ export const tasksReducer = (state = INITIAL_STATE, action) => {
     }
 
     case TASKS_ACTIONS.ADD_TASK: {
-      const id = uuidv4();
+      const id = state.tasks.length + 1;
       return {
         tasks: state.tasks.concat({ ...action.payload, id }),
       };
@@ -58,7 +58,23 @@ export const filterReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const rootReducer = combineReducers({ tasksReducer, filterReducer });
+export const registerReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case TASKS_ACTIONS.CHECK_AUTHORIZATION: {
+      return {
+        isAuth: true,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  tasksReducer,
+  filterReducer,
+  registerReducer,
+});
 
 export const store = createStore(
   rootReducer,

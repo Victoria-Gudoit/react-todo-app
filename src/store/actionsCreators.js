@@ -19,3 +19,7 @@ export const changeFilter = (event) => ({
   payload: event,
   type: TASKS_ACTIONS.FILTER_TASKS,
 });
+
+export const checkAuth = () => ({
+  type: TASKS_ACTIONS.CHECK_AUTHORIZATION,
+});

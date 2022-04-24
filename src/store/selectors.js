@@ -1,4 +1,4 @@
-import { FILTER_STATUSES } from "../components/constants";
+import { FILTER_STATUSES } from "../components/Tasks/constants";
 
 export const filterTasks = (filter, task) => {
   if (filter === FILTER_STATUSES.ALL) {
@@ -14,6 +14,7 @@ export const filterTasks = (filter, task) => {
 
 export const getTasksOriginal = (state) => state.tasksReducer.tasks;
 export const getFilter = (state) => state.filterReducer.filter;
+export const checkAuth = (state) => state.registerReducer.isAuth;
 
 export const getTasks = (state) => {
   const tasks = getTasksOriginal(state);

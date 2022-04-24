@@ -1,0 +1,69 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: flex-start;
+    margin: 0 auto;
+    font-family: "Lato", sans-serif;
+    color: rgb(24, 23, 23);
+}
+
+.form {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 7px;
+    row-gap: 10px;
+}
+
+span {
+    color: rgba(24, 24, 24, 0.692);
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    margin-top: 50px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.253);
+    color: rgb(10, 10, 10);
+    letter-spacing: 5px;
+    font-family: "Raleway", sans-serif;
+}
+
+.input {
+    background: none;
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(8, 8, 8, 0.5);
+    outline: none;
+    color: rgb(39, 37, 37);
+}
+
+.btn {
+    margin-top: 10px;
+    border-radius: 4px;
+    padding: 10px 40px;
+    background: #fff;
+    display: block;
+    border: 1px solid #000;
+    font-family: "Dosis", sans;
+    font-size: 18px;
+    font-weight: 200;
+    color: #000;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+    opacity: 0.8;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    border: 1px solid teal;
+    opacity: 1;
+    letter-spacing: 2px;
+}
