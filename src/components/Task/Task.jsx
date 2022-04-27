@@ -1,34 +1,45 @@
 import React from "react";
 import { connect } from "react-redux";
-import { TasksSelectors } from "../../store";
+import { TasksSelectors, TasksActionCreators } from "../../store";
 import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import css from "./task.module.css";
 
 export class TaskOriginal extends React.Component {
-  render() {
-    const { tasks } = this.props;
-    const id = this.props.match.params.id;
 
-    if(!tasks[id - 1]) {
+  textAreaHandler = (event) => {
+    const text = event.target.value;
+    this.props.addDescriptionTask(text, +this.props.match.params.id);
+  };
+
+  render() {
+    const {id} = this.props.match.params
+    const task = this.props.getTaskById(id)
+
+    if(!task) {
       return <div className={css.error}>К сожалению, сегодня не ваш день :(</div>
     } else {
        return (
-      <div className={css.wrapper}>
-        <p className={css.task}> Ваша задача: {tasks[id - 1].label}</p>
-        <textarea rows="10" placeholder="Опишите поподробнее вашу задачу"></textarea>
-      </div>
-    );
+         <div className={css.wrapper}>
+        <div className={css.task}>{task.label}
+         <textarea onChange={this.textAreaHandler} placeholder="Опишите поподробнее вашу задачу" cols="20" rows="5"></textarea>
+         </div>
+         </div>
+    )}
     }
-  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    tasks: TasksSelectors.getTasks(state),
-  };
+     getTaskById: (id) => TasksSelectors.getTaskById(id)(state)
+  }
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  addDescriptionTask: (text, id) =>
+    dispatch(TasksActionCreators.addDescriptionTask(text, id)),
+});
 
 export const Task = compose(
   withRouter,
-  connect(mapStateToProps))(TaskOriginal);
+  connect(mapStateToProps, mapDispatchToProps))(TaskOriginal);

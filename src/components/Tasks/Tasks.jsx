@@ -12,9 +12,6 @@ class TasksOriginal extends React.Component {
     taskInput: "",
   };
 
-  deleteTaskHandler = (id) => {
-    this.props.deleteTask(id);
-  };
 
   inputChangeHandler = (event) => {
     this.setState({ taskInput: event.target.value });
@@ -23,14 +20,6 @@ class TasksOriginal extends React.Component {
   addTaskHandler = () => {
     this.props.addTask({ label: this.state.taskInput, isDone: false });
     this.setState({ taskInput: "" });
-  };
-
-  toggleCheckbox = (id) => {
-    this.props.toggleCheckbox(id);
-  };
-
-  changeFilterHandler = (event) => {
-    this.props.changeFilter(event.target.value);
   };
 
   render() {
@@ -61,7 +50,7 @@ class TasksOriginal extends React.Component {
           <CheckboxGroup
             options={filterOptions}
             value={filter}
-            onChange={this.changeFilterHandler}
+            onChange={ (event) => this.props.changeFilter(event.target.value)}
           />
         </div>
         <ul className={css.list}>
@@ -72,7 +61,7 @@ class TasksOriginal extends React.Component {
                   checked={isDone}
                   type="checkbox"
                   onChange={() => {
-                    this.toggleCheckbox(id);
+                    this.props.toggleTask(id);
                   }}
                   className={css.checkbox}
                 />
@@ -85,7 +74,7 @@ class TasksOriginal extends React.Component {
                 {isDone && (
                   <button
                     onClick={() => {
-                      this.deleteTaskHandler(id);
+                      this.props.deleteTask(id);
                     }}
                     type="button"
                     className={css.btn}
@@ -112,7 +101,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   deleteTask: TasksActionCreators.deleteTask,
   addTask: TasksActionCreators.addTask,
-  toggleCheckbox: TasksActionCreators.toggleCheckbox,
+  toggleTask: TasksActionCreators.toggleTask,
   changeFilter: TasksActionCreators.changeFilter,
 };
 

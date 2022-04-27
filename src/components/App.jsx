@@ -1,4 +1,4 @@
-import { withRouter, Link } from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { About } from "./About/About";
 import { Tasks } from "./Tasks/Tasks";
@@ -9,24 +9,14 @@ import { RegisterForm } from "./Register/RegisterForm";
 import { TasksSelectors } from "../store";
 import React from "react";
 import { Task } from "./Task/Task";
+import {Header} from "./Header/Header"
 
 class AppOriginal extends React.Component {
   render() {
     const { checkAuth } = this.props;
     return (
       <div className={css.main}>
-        <div className={css.wrapper}>
-          <ul className={css.list}>
-            {["tasks", "about"].map((route) => (
-              <li>
-                <Link className={css.link} to={`/${route}`}>
-                  {route}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          {checkAuth && <button className={css.btn}>Выйти</button>}
-        </div>
+      <Header/>
         <Switch>
           <Route path="/register" exact>
             <RegisterForm />
@@ -51,7 +41,6 @@ class AppOriginal extends React.Component {
 const mapStateToProps = (state) => {
   return {
     checkAuth: TasksSelectors.checkAuth(state),
-    tasks: TasksSelectors.getTasks(state),
   };
 };
 

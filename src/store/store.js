@@ -1,18 +1,25 @@
 import { createStore, combineReducers } from "redux";
 import { TASKS_ACTIONS } from "./constants";
 import { FILTER_STATUSES } from "../components/Tasks/constants";
+import { USER_ACTIONS } from "./constants";
 
-const INITIAL_STATE = {
+const INITIAL_TASKS_STATE = {
   tasks: [
-    { id: 1, label: "срочно покормить кота", isDone: true },
-    { id: 2, label: "поспать 12 часов", isDone: false },
-    { id: 3, label: "вкусно поесть", isDone: true },
+    { id: 1, label: "срочно покормить кота", isDone: true, description: "" },
+    { id: 2, label: "поспать 12 часов", isDone: false, description: "" },
+    { id: 3, label: "вкусно поесть", isDone: true, description: "" },
   ],
   filter: FILTER_STATUSES.ALL,
-  isAuth: false,
 };
 
-export const tasksReducer = (state = INITIAL_STATE, action) => {
+const generateId = (tasks) => {
+  if (tasks.length) {
+    const id = tasks.map(({ id }) => id);
+    return Math.max(...id) + 1;
+  } else return 1;
+};
+
+export const tasksReducer = (state = INITIAL_TASKS_STATE, action) => {
   switch (action.type) {
     case TASKS_ACTIONS.DELETE_TASK: {
       return {
@@ -23,7 +30,7 @@ export const tasksReducer = (state = INITIAL_STATE, action) => {
     }
 
     case TASKS_ACTIONS.ADD_TASK: {
-      const id = state.tasks.length + 1;
+      const id = generateId(state.tasks);
       return {
         tasks: state.tasks.concat({ ...action.payload, id }),
       };
@@ -41,12 +48,23 @@ export const tasksReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case TASKS_ACTIONS.addDescriptionTask: {
+      return {
+        tasks: state.tasks.map((task) => {
+          if (action.payload.id === task.id) {
+            return { ...task, description: action.payload.text };
+          }
+          return task;
+        }),
+      };
+    }
+
     default:
       return state;
   }
 };
 
-export const filterReducer = (state = INITIAL_STATE, action) => {
+export const filterReducer = (state = INITIAL_TASKS_STATE, action) => {
   switch (action.type) {
     case TASKS_ACTIONS.FILTER_TASKS: {
       return {
@@ -58,9 +76,13 @@ export const filterReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export const registerReducer = (state = INITIAL_STATE, action) => {
+const INITIAL_USER_STATE = {
+  isAuth: false,
+};
+
+export const registerReducer = (state = INITIAL_USER_STATE, action) => {
   switch (action.type) {
-    case TASKS_ACTIONS.CHECK_AUTHORIZATION: {
+    case USER_ACTIONS.USER_AUTHORIZATION: {
       return {
         isAuth: true,
       };

@@ -6,11 +6,16 @@
 }
 
 .task {
+  
+  display: flex;
+  flex-direction: column;
+  text-align: center;
   font-size: 20px;
   font-weight: 700;
 }
 
 textarea {
+  margin-top: 40px;
   font-size: 18px;
   outline: none;
   border: 1px solid #000;

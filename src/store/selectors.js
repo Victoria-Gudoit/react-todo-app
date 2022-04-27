@@ -22,3 +22,6 @@ export const getTasks = (state) => {
 
   return tasks.filter((task) => filterTasks(filter, task));
 };
+
+export const getTaskById = (taskId) => (state) =>
+  getTasks(state).find(({ id }) => id === +taskId);
