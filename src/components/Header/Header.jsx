@@ -1,13 +1,14 @@
 import css from "./header.module.css"
-import { withRouter, Link } from "react-router-dom";
-import { compose } from "redux";
-import { connect } from "react-redux";
 import { TasksSelectors} from "../../store"
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
- const HeaderOriginal = (props) => {
-    const { checkAuth } = props;
+ export const Header = () => {
+
+  const checkAuth = useSelector(TasksSelectors.checkAuth)
+
     return (
         <div className={css.wrapper}>
           <ul className={css.list}>
@@ -24,10 +25,3 @@ import React from "react";
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-      checkAuth: TasksSelectors.checkAuth(state),
-    };
-  };
-  
-  export const Header = compose(withRouter, connect(mapStateToProps))(HeaderOriginal);

@@ -1,45 +1,44 @@
 import React from "react";
-import { connect } from "react-redux";
-import { TasksSelectors, TasksActionCreators } from "../../store";
-import { withRouter } from "react-router-dom";
-import { compose } from "redux";
+import { useDispatch, useSelector } from "react-redux";
+import { TasksSelectors } from "../../store";
+import { useParams } from "react-router-dom";
 import css from "./task.module.css";
+import { TasksAction } from "../../store";
 
-export class TaskOriginal extends React.Component {
+export const Task = () => {
+  const { id } = useParams();
 
-  textAreaHandler = (event) => {
-    const text = event.target.value;
-    this.props.addDescriptionTask(text, +this.props.match.params.id);
+  const GetTaskById = (id) => {
+    const todo = useSelector((state) => TasksSelectors.getTaskById(id)(state));
+    return todo;
   };
 
-  render() {
-    const {id} = this.props.match.params
-    const task = this.props.getTaskById(id)
+  const task = GetTaskById(id);
 
-    if(!task) {
-      return <div className={css.error}>К сожалению, сегодня не ваш день :(</div>
-    } else {
-       return (
-         <div className={css.wrapper}>
-        <div className={css.task}>{task.label}
-         <textarea onChange={this.textAreaHandler} placeholder="Опишите поподробнее вашу задачу" cols="20" rows="5"></textarea>
-         </div>
-         </div>
-    )}
-    }
-}
+  const dispatch = useDispatch();
+  const addDescriptionTask = (text, id) =>
+    dispatch(TasksAction.addDescriptionTask(text, id));
 
-const mapStateToProps = (state) => {
-  return {
-     getTaskById: (id) => TasksSelectors.getTaskById(id)(state)
+  const textAreaHandler = ({ target }) => {
+    const text = target.value;
+    addDescriptionTask(text, +id);
+  };
+
+  if (!task) {
+    return <div className={css.error}>К сожалению, сегодня не ваш день :(</div>;
+  } else {
+    return (
+      <div className={css.wrapper}>
+        <div className={css.task}>
+          {task.label}
+          <textarea
+            onChange={textAreaHandler}
+            placeholder="Опишите поподробнее вашу задачу"
+            cols="20"
+            rows="5"
+          ></textarea>
+        </div>
+      </div>
+    );
   }
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  addDescriptionTask: (text, id) =>
-    dispatch(TasksActionCreators.addDescriptionTask(text, id)),
-});
-
-export const Task = compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps))(TaskOriginal);

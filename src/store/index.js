@@ -1,5 +1,5 @@
 export * as TasksSelectors from "./selectors";
 export { store } from "./store";
-export { TASKS_ACTIONS } from "./constants";
-export { USER_ACTIONS } from "./constants";
-export * as TasksActionCreators from "./actionsCreators";
+export { actions as TasksAction } from "./slice";
+export { actions as filterAction } from "./filterSlice";
+export { actions as authAction } from "./registerSlice";

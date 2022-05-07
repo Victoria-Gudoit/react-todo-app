@@ -1,19 +1,18 @@
-import { withRouter} from "react-router-dom";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect} from "react-router-dom";
 import { About } from "./About/About";
 import { Tasks } from "./Tasks/Tasks";
 import css from "./style.module.css";
-import { compose } from "redux";
-import { connect } from "react-redux";
 import { RegisterForm } from "./Register/RegisterForm";
 import { TasksSelectors } from "../store";
 import React from "react";
 import { Task } from "./Task/Task";
 import {Header} from "./Header/Header"
+import { useSelector } from "react-redux";
 
-class AppOriginal extends React.Component {
-  render() {
-    const { checkAuth } = this.props;
+export const App = () => {
+
+  const checkAuth = useSelector(TasksSelectors.checkAuth)  
+
     return (
       <div className={css.main}>
       <Header/>
@@ -34,14 +33,7 @@ class AppOriginal extends React.Component {
           <Redirect to="/tasks" />
         </Switch>
       </div>
-    );
-  }
+    )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    checkAuth: TasksSelectors.checkAuth(state),
-  };
-};
 
-export const App = compose(withRouter, connect(mapStateToProps))(AppOriginal);
