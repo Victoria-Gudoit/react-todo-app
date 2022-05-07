@@ -1,93 +1,39 @@
+import { Switch, Route, Redirect} from "react-router-dom";
+import { About } from "./About/About";
+import { Tasks } from "./Tasks/Tasks";
+import css from "./style.module.css";
+import { RegisterForm } from "./Register/RegisterForm";
+import { TasksSelectors } from "../store";
 import React from "react";
-import css from "./styles.module.css";
-import { FILTER_STATUSES, filterOptions } from "./constants";
-import { CheckboxGroup } from "./common";
-import {v4 as uuidv4} from "uuid"
+import { Task } from "./Task/Task";
+import {Header} from "./Header/Header"
+import { useSelector } from "react-redux";
 
-const filterTask = (filter, task) => {
-  if (filter === FILTER_STATUSES.ALL) {
-    return true;
-  }
+export const App = () => {
 
-  if (filter === FILTER_STATUSES.DONE) {
-    return task.isDone;
-  }
-
-  return !task.isDone;
-};
-
-
-export class App extends React.Component {
-  state = {
-    tasks: [
-      { id: 1, label: "срочно покормить кота", isDone: true },
-      { id: 2, label: "поспать 12 часов", isDone: false },
-      { id: 3, label: "вкусно поесть", isDone: true },
-    ],
-    taskInput: "",
-    filter: FILTER_STATUSES.ALL,
-  };
-
-  deleteTaskHandler = (id) => {
-    this.setState((prevState) => ({
-      tasks: prevState.tasks.filter(({ id: taskId }) => taskId !== id),
-    }));
-  };
-
-  inputChangeHandler = (event) => {
-    this.setState({ taskInput: event.target.value});
-  };
-
-  addTaskHandler = () => {
-    this.setState((prevState) => ({
-      tasks: prevState.tasks.concat([
-        { id: uuidv4(), label: prevState.taskInput, isDone: false },
-      ]),
-    }));
-    this.setState({taskInput:''})
-  };
-
-  toggleCheckbox = (id) => {
-    this.setState((prevState) => ({
-      tasks: prevState.tasks.map((task) => {
-        if (task.id !== id) {
-          return task;
-        }
-
-        return { ...task, isDone: !task.isDone };
-      }),
-    }));
-  };
-
-  changeFilterHandler = (event) => {
-    this.setState({ filter: event.target.value });
-  };
-
-  render() {
-    const { tasks, taskInput, filter } = this.state;
+  const checkAuth = useSelector(TasksSelectors.checkAuth)  
 
     return (
-      <div className={css.wrapper}>
-        <h1 className={css.title}>My todo</h1>
-        <form className={css.form}>
-          <input value={taskInput} onChange={this.inputChangeHandler} type="text" className={css.input} />
-          <button onClick={this.addTaskHandler} type="button" className={css.btn} > Add task </button>
-        </form>
-        <div> <CheckboxGroup options={filterOptions} value={filter} onChange={this.changeFilterHandler} />
-        </div>
-        <ul className={css.list}>
-          {tasks.filter((task) => filterTask(filter, task)).map(({ id, label, isDone }) => (
-              <li className={css.item} key={id}>
-                <input checked={isDone} type="checkbox" onChange={() => {this.toggleCheckbox(id)}} className={css.checkbox} />
-                {label}
-                {isDone && (<button onClick={() => {this.deleteTaskHandler(id)}} type="button" className={css.btn} >
-                    Remove
-                  </button>
-                )}
-              </li>
-            ))}
-        </ul>
+      <div className={css.main}>
+      <Header/>
+        <Switch>
+          <Route path="/register" exact>
+            <RegisterForm />
+          </Route>
+          {!checkAuth && <Redirect to="/register" />}
+          <Route path="/about" exact>
+            <About />
+          </Route>
+          <Route path="/task/:id" exact>
+            <Task />
+          </Route>
+          <Route path="/tasks" exact>
+            <Tasks />
+          </Route>
+          <Redirect to="/tasks" />
+        </Switch>
       </div>
-    );
-  }
+    )
 }
+
+
